@@ -23,18 +23,19 @@ class SubCategoryScreen extends StatelessWidget {
         titleText: categorySlug.capitalizeFirst ?? '',
       ),
       body: Obx(() {
-        return SingleChildScrollView(
-          controller: controller.scrollController,
-          padding: EdgeInsets.only(bottom: 20.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              controller.isLoading.value
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : GridView.builder(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+        return controller.isLoading.value
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : SingleChildScrollView(
+                controller: controller.scrollController,
+                padding: EdgeInsets.only(bottom: 20.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GridView.builder(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.w, vertical: 16.h),
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: controller.products.length,
@@ -58,14 +59,14 @@ class SubCategoryScreen extends StatelessWidget {
                         );
                       },
                     ),
-              if (controller.isMoreLoading.value)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 26.0),
-                  child: Center(child: CircularProgressIndicator()),
-                )
-            ],
-          ),
-        );
+                    if (controller.isMoreLoading.value)
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 26.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      )
+                  ],
+                ),
+              );
       }),
     );
   }

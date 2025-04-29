@@ -30,80 +30,83 @@ class ShoppingScreen extends StatelessWidget {
         final showSeeMoreButton = categoryController.categories.length >
             categoryController.visibleLimit;
 
-        return SingleChildScrollView(
-          controller: productController.scrollController,
-          padding: EdgeInsets.only(bottom: 20.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GridView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: categoryController.visibleCategories.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  childAspectRatio: 0.72,
-                ),
-                itemBuilder: (context, index) {
-                  final category = categoryController.visibleCategories[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Get.to(() =>
-                          SubCategoryScreen(categorySlug: category.slug ?? ''));
-                    },
-                    child: CategoryWidget(
-                      images: "",
-                      titleText: category.name ?? '',
+        return productController.isLoading.value
+            ? const Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                controller: productController.scrollController,
+                padding: EdgeInsets.only(bottom: 20.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GridView.builder(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.w, vertical: 20.h),
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: categoryController.visibleCategories.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                        mainAxisSpacing: 16,
+                        crossAxisSpacing: 16,
+                        childAspectRatio: 0.72,
+                      ),
+                      itemBuilder: (context, index) {
+                        final category =
+                            categoryController.visibleCategories[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Get.to(() => SubCategoryScreen(
+                                categorySlug: category.slug ?? ''));
+                          },
+                          child: CategoryWidget(
+                            images: "",
+                            titleText: category.name ?? '',
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-              if (showSeeMoreButton)
-                Center(
-                  child: GestureDetector(
-                    onTap: categoryController.toggleShowAll,
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 15.h),
-                      height: 35.h,
-                      width: 90.w,
-                      child: Card(
-                        elevation: 6,
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(width: 5.w),
-                            Text(
-                              categoryController.showAll.value
-                                  ? "See less"
-                                  : "See more",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: AppColors.depBlueColors,
+                    if (showSeeMoreButton)
+                      Center(
+                        child: GestureDetector(
+                          onTap: categoryController.toggleShowAll,
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 15.h),
+                            height: 35.h,
+                            width: 90.w,
+                            child: Card(
+                              elevation: 6,
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(width: 5.w),
+                                  Text(
+                                    categoryController.showAll.value
+                                        ? "See less"
+                                        : "See more",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: AppColors.depBlueColors,
+                                    ),
+                                  ),
+                                  Icon(
+                                    categoryController.showAll.value
+                                        ? Icons.expand_less
+                                        : Icons.expand_more,
+                                    size: 23,
+                                    color: AppColors.depBlueColors,
+                                  ),
+                                ],
                               ),
                             ),
-                            Icon(
-                              categoryController.showAll.value
-                                  ? Icons.expand_less
-                                  : Icons.expand_more,
-                              size: 23,
-                              color: AppColors.depBlueColors,
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
-              productController.isLoading.value
-                  ? const Center(child: CircularProgressIndicator())
-                  : GridView.builder(
+                    GridView.builder(
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -128,14 +131,14 @@ class ShoppingScreen extends StatelessWidget {
                         );
                       },
                     ),
-              if (productController.isMoreLoading.value)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 26.0),
-                  child: Center(child: CircularProgressIndicator()),
+                    if (productController.isMoreLoading.value)
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 26.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      ),
+                  ],
                 ),
-            ],
-          ),
-        );
+              );
       }),
     );
   }
