@@ -50,7 +50,8 @@ class SearchScreen extends StatelessWidget {
                   return const Center(child: Text("No results found."));
                 }
                 return GridView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: controller.searchResults.length,
