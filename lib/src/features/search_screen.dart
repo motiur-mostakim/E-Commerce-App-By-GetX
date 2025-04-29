@@ -70,7 +70,7 @@ class SearchScreen extends StatelessWidget {
                       },
                       images: product.thumbnail ?? '',
                       productName: product.title ?? '',
-                      price: "৳ ${product.price}",
+                      price: "\$ ${product.price}",
                     );
                   },
                 );

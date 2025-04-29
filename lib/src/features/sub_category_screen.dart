@@ -55,7 +55,7 @@ class SubCategoryScreen extends StatelessWidget {
                           },
                           images: product.thumbnail ?? '',
                           productName: product.title ?? '',
-                          price: product.price?.toString() ?? '',
+                          price: "\$ ${product.price}",
                         );
                       },
                     ),

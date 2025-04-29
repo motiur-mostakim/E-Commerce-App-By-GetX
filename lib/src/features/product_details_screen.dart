@@ -103,7 +103,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "৳ ${controller.product.price}",
+                        "\$ ${controller.product.price}",
                         style: TextStyle(
                             fontSize: 18.sp, color: AppColors.depBlueColors),
                       ),
